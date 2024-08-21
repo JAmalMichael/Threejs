@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@dimforge/rapier3d-compat": "^0.14.0",
     "@tweenjs/tween.js": "^23.1.1",
     "@types/three": "^0.167.1",
     "three": "^0.167.1",
