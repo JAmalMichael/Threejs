@@ -21,7 +21,7 @@ export default class Environment {
         // this.scene.add(directionalLightHelper)
 
         const textureLoader = new TextureLoader()
-        const textureflare0 = textureLoader.load('img/lensflare0.png')
+        const textureFlare0 = textureLoader.load('img/lensflare0.png')
         const textureFlare3 = textureLoader.load('img/lensflare3.png')
 
         const lensflare = new Lensflare()
@@ -34,11 +34,11 @@ export default class Environment {
     }
 
     async init() {
-        await RGBELoader().loadAsync('img/venice_sunset_1k.hdr').then((texture) => {
-            texture.mapping = EquirectangularReflectionMapping
-            this.scene.environment = texture
-            this.scene.background = texture
-            this.scene.backgroundBlurriness = 0.4
+        await new RGBELoader().loadAsync('img/venice_sunset_1k.hdr').then((texture) => {
+          texture.mapping = EquirectangularReflectionMapping
+          this.scene.environment = texture
+          this.scene.background = texture
+          this.scene.backgroundBlurriness = 0.4
         })
     }
 }
