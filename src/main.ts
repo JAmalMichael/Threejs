@@ -23,3 +23,21 @@ const stats = new Stats()
 document.body.appendChild(stats.dom)
 
 const game = new Game(scene, camera, renderer)
+await game.init()
+
+const clock = new Clock()
+let delta = 0
+
+function animate() {
+    requestAnimationFrame(animate)
+
+    delta = clock.getDelta()
+
+    game.update(delta)
+
+    renderer.render(scene, camera)
+
+    stats.update()
+}
+
+animate()
