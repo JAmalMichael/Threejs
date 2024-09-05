@@ -10,7 +10,7 @@ export default class James extends Group {
     super()
 
     const dracoLoader = new DRACOLoader()
-    dracoLoader.setDecoderPath('jsm/libs/draco/')
+    dracoLoader.setDecoderPath('./node_modules/three/examples/jsm/libs/draco/')
 
     this.glTFLoader = new GLTFLoader()
     this.glTFLoader.setDRACOLoader(dracoLoader)

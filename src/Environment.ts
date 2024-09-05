@@ -33,7 +33,7 @@ export default class Environment {
   }
 
   async init() {
-    await new RGBELoader().loadAsync('img/venice_sunset_1k.hdr').then((texture) => {
+    await new RGBELoader().loadAsync('/img/venice_sunset_1k.hdr').then((texture) => {
       texture.mapping = EquirectangularReflectionMapping
       this.scene.environment = texture
       this.scene.background = texture
