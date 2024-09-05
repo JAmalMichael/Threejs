@@ -33,10 +33,10 @@ export default class James extends Group {
 
     this.mixer = new AnimationMixer(james.scene)
     animationActions['idle'] = this.mixer.clipAction(idle.animations[0])
-    animationActions['walk'] = this.mixer.clipAction(james.animations[0])
-    //animationActions['walk'] = this.mixer.clipAction(AnimationUtils.subclip(james.animations[0], 'walk', 0, 42))
-    animationActions['run'] = this.mixer.clipAction(run.animations[0])
-    //animationActions['run'] = this.mixer.clipAction(AnimationUtils.subclip(run.animations[0], 'run', 0, 17))
+    //animationActions['walk'] = this.mixer.clipAction(james.animations[0])
+    animationActions['walk'] = this.mixer.clipAction(AnimationUtils.subclip(james.animations[0], 'walk', 0, 42))
+    //animationActions['run'] = this.mixer.clipAction(run.animations[0])
+    animationActions['run'] = this.mixer.clipAction(AnimationUtils.subclip(run.animations[0], 'run', 0, 17))
     // jump.animations[0].tracks = jump.animations[0].tracks.filter(function (e) {
     //   return !e.name.endsWith('.position')
     // })
