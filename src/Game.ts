@@ -1,4 +1,4 @@
-import { BoxGeometry, Mesh, MeshStandardMaterial, PerspectiveCamera, Scene, WebGLRenderer, Vector3 } from "three";
+import { BoxGeometry, Mesh, MeshStandardMaterial, PerspectiveCamera, Scene, WebGLRenderer, Vector3 } from 'three'
 import UI from './UI'
 import Player from './Player'
 import Environment from './Environment'
@@ -7,10 +7,11 @@ import Environment from './Environment'
 //import { GUI } from 'three/addons/libs/lil-gui.module.min.js'
 
 export default class Game {
-    scene: Scene
-    camera: PerspectiveCamera
-    renderer: WebGLRenderer 
-      //world?: World
+  scene: Scene
+  camera: PerspectiveCamera
+  renderer: WebGLRenderer
+  player?: Player
+  //world?: World
   //rapierDebugRenderer?: RapierDebugRenderer
   //eventQueue?: EventQueue
 
@@ -21,7 +22,7 @@ export default class Game {
   }
 
   async init() {
-         // await RAPIER.init() // This line is only needed if using the compat version
+    // await RAPIER.init() // This line is only needed if using the compat version
     // const gravity = new Vector3(0.0, -9.81, 0.0)
 
     // this.world = new World(gravity)
@@ -40,7 +41,7 @@ export default class Game {
     //const floorShape = ColliderDesc.cuboid(25, 0.5, 25)
     //this.world.createCollider(floorShape, floorBody)
 
-    this.player = new Player(this.scene, this.camera this.renderer)
+    this.player = new Player(this.scene, this.camera, this.renderer) //, this.world, [0, 0.1, 0])
     await this.player.init()
 
     const environment = new Environment(this.scene)
@@ -49,11 +50,10 @@ export default class Game {
 
     const ui = new UI(this.renderer)
     ui.show()
-
   }
 
   update(delta: number) {
-      // ;(this.world as World).timestep = Math.min(delta, 0.1)
+    // ;(this.world as World).timestep = Math.min(delta, 0.1)
     // this.world?.step() // this.eventQueue)
     // this.eventQueue?.drainCollisionEvents((_, __, started) => {
     //   if (started) {
@@ -63,5 +63,4 @@ export default class Game {
     this.player?.update(delta)
     // this.rapierDebugRenderer?.update()
   }
-  
 }
