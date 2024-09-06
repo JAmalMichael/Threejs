@@ -1,4 +1,4 @@
-import { DirectionalLight, EquirectangularReflectionMapping, GridHelper, Scene, TextureLoader } from 'three'
+import { DirectionalLight, EquirectangularReflectionMapping, Scene, TextureLoader } from 'three'
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js'
 import { Lensflare, LensflareElement } from 'three/addons/objects/Lensflare.js'
 
@@ -9,8 +9,6 @@ export default class Environment {
   constructor(scene: Scene) {
     this.scene = scene
 
-    this.scene.add(new GridHelper(50, 50))
-
     this.light = new DirectionalLight(0xffffff, Math.PI)
     this.light.position.set(65.7, 19.2, 50.2)
     this.light.castShadow = true
@@ -20,8 +18,8 @@ export default class Environment {
     // this.scene.add(directionalLightHelper)
 
     const textureLoader = new TextureLoader()
-    const textureFlare0 = textureLoader.load('/img/lensflare0.png')
-    const textureFlare3 = textureLoader.load('/img/lensflare3.png')
+    const textureFlare0 = textureLoader.load('img/lensflare0.png')
+    const textureFlare3 = textureLoader.load('img/lensflare3.png')
 
     const lensflare = new Lensflare()
     lensflare.addElement(new LensflareElement(textureFlare0, 1000, 0))
@@ -33,7 +31,7 @@ export default class Environment {
   }
 
   async init() {
-    await new RGBELoader().loadAsync('/img/venice_sunset_1k.hdr').then((texture) => {
+    await new RGBELoader().loadAsync('img/venice_sunset_1k.hdr').then((texture) => {
       texture.mapping = EquirectangularReflectionMapping
       this.scene.environment = texture
       this.scene.background = texture

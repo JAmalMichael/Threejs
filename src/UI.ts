@@ -1,49 +1,74 @@
-import { WebGLRenderer } from "three";
+import { WebGLRenderer } from 'three'
 
 export default class UI {
-    renderer: WebGLRenderer
-    instructions: HTMLDivElement
+  renderer: WebGLRenderer
+  instructions: HTMLDivElement
+  timeDisplay: HTMLDivElement
+  levelCompleted: HTMLDivElement
+  interval = -1
+  time = 0
 
-    constructor(renderer: WebGLRenderer) {
-        this.renderer = renderer
+  constructor(renderer: WebGLRenderer) {
+    this.renderer = renderer
 
-        this.instructions = document.getElementById('instructions') as HTMLDivElement
-        if(!this.instructions) {
-            console.log("Error, instructions element not found")
-        }
+    this.instructions = document.getElementById('instructions') as HTMLDivElement
 
-        const startButton = document.getElementById('startButton') as HTMLButtonElement
-        if(!startButton) {
-            console.log("Error, Start-Button element not found")
-        }
-        startButton.addEventListener(
-            'click',
-            () => {
-                renderer.domElement.requestPointerLock()
-            },
-            false
-        )
+    this.timeDisplay = document.getElementById('timeDisplay') as HTMLDivElement
 
-        document.addEventListener('pointerlockchange', () => {
-            if(document.pointerLockElement === this.renderer.domElement) {
-                this.instructions.style.display = 'none'
-            } else {
-                this.instructions.style.display = 'block'
-            }
-        })
-    }
+    this.levelCompleted = document.getElementById('levelCompleted') as HTMLDivElement
 
+    const startButton = document.getElementById('startButton') as HTMLButtonElement
+    startButton.addEventListener(
+      'click',
+      () => {
+        renderer.domElement.requestPointerLock()
+      },
+      false
+    )
 
-    show() {
-        const spinner = document.getElementById('spinner') as HTMLDivElement;
-        if (spinner) {
-          spinner.style.display = 'none';
-        } else {
-          console.error("Error: 'spinner' element not found");
-        }
-    
-        if (this.instructions) {
-          this.instructions.style.display = 'block';
-        }
-    }
+    document.addEventListener('pointerlockchange', () => {
+      if (document.pointerLockElement === this.renderer.domElement) {
+        this.levelCompleted.style.display = 'none'
+
+        this.instructions.style.display = 'none'
+
+        this.timeDisplay.style.display = 'block'
+
+        this.interval = setInterval(() => {
+          this.time += 1
+          this.timeDisplay.innerText = this.time.toString()
+        }, 1000)
+      } else {
+        this.instructions.style.display = 'block'
+
+        this.timeDisplay.style.display = 'none'
+        clearInterval(this.interval)
+      }
+    })
+  }
+
+  show() {
+    ;(document.getElementById('spinner') as HTMLDivElement).style.display = 'none'
+    this.instructions.style.display = 'block'
+  }
+
+  reset() {
+    clearInterval(this.interval)
+
+    this.levelCompleted.style.display = 'none'
+
+    this.time = 0
+    this.timeDisplay.innerText = this.time.toString()
+
+    this.interval = setInterval(() => {
+      this.time += 1
+      this.timeDisplay.innerText = this.time.toString()
+    }, 1000)
+  }
+
+  showLevelCompleted() {
+    clearInterval(this.interval)
+
+    this.levelCompleted.style.display = 'block'
+  }
 }

@@ -17,10 +17,9 @@ export default class James extends Group {
   }
 
   async init(animationActions: { [key: string]: AnimationAction }) {
-    const [james, idle, run, jump, pose] = await Promise.all([
+    const [james, idle, jump, pose] = await Promise.all([
       this.glTFLoader.loadAsync('models/james$@walk_compressed.glb'),
       this.glTFLoader.loadAsync('models/james@idle.glb'),
-      this.glTFLoader.loadAsync('models/james@run.glb'),
       this.glTFLoader.loadAsync('models/james@jump.glb'),
       this.glTFLoader.loadAsync('models/james@pose.glb'),
     ])
@@ -33,14 +32,11 @@ export default class James extends Group {
 
     this.mixer = new AnimationMixer(james.scene)
     animationActions['idle'] = this.mixer.clipAction(idle.animations[0])
-    //animationActions['walk'] = this.mixer.clipAction(james.animations[0])
     animationActions['walk'] = this.mixer.clipAction(AnimationUtils.subclip(james.animations[0], 'walk', 0, 42))
-    //animationActions['run'] = this.mixer.clipAction(run.animations[0])
-    animationActions['run'] = this.mixer.clipAction(AnimationUtils.subclip(run.animations[0], 'run', 0, 17))
-    // jump.animations[0].tracks = jump.animations[0].tracks.filter(function (e) {
-    //   return !e.name.endsWith('.position')
-    // })
-    // console.log(jump.animations[0].tracks)
+    jump.animations[0].tracks = jump.animations[0].tracks.filter(function (e) {
+      return !e.name.endsWith('.position')
+    })
+    console.log(jump.animations[0].tracks)
     animationActions['jump'] = this.mixer.clipAction(jump.animations[0])
     animationActions['pose'] = this.mixer.clipAction(pose.animations[0])
 
